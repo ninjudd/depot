@@ -1,16 +1,6 @@
 (ns depot.pom
+  (:use [useful.string :only [camelize dasherize]])
   (:require [clojure.string :as s]))
-
-(defn camelize [str]
-  (s/replace str
-             #"-(\w)"
-             (comp s/upper-case second)))
-
-(defn dasherize [name]
-  (s/replace name
-             #"(?<![A-Z])[A-Z]+"
-             (comp (partial str "-")
-                   s/lower-case)))
 
 (defn pomify [key]
   (->> key name camelize keyword))
