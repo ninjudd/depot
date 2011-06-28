@@ -6,7 +6,7 @@
   (->> key name camelize keyword))
 
 (defmulti prxml-tags
-  (fn [tag value] (keyword "cake.tasks.deps" (name tag))))
+  (fn [tag value] (keyword "depot.pom" (name tag))))
 
 (defmethod prxml-tags :default
   ([tag value]
