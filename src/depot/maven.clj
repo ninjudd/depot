@@ -13,16 +13,14 @@
 (defn- exclusion [dep]
   (ant-type Exclusion {:group-id (namespace dep) :artifact-id (name dep)}))
 
-(defn- dependency [[dep opts]]
-  (ant-type Dependency
-    {:group-id    (namespace dep)
-     :artifact-id (name dep)
-     :version     (:version opts)
-     :classifier  (:classifier opts)
-     :exclusions  (map exclusion (concat *exclusions* (:exclusions opts)))}))
-
 (defn- dependencies [spec type]
-  (map dependency (get spec type)))
+  (for [[dep opts] (get spec type)]
+    (ant-type Dependency
+      {:group-id    (namespace dep)
+       :artifact-id (name dep)
+       :version     (or (:version opts) (get-in spec [:dependencies dep :version]) "LATEST")
+       :classifier  (:classifier opts)
+       :exclusions  (map exclusion (concat *exclusions* (:exclusions opts)))})))
 
 (defn- add-dependencies [task deps]
   (doseq [dep deps]

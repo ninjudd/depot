@@ -1,4 +1,4 @@
-(defproject depot "0.1.2"
+(defproject depot "0.1.3"
   :description "A place for storing goods or motor vehicles."
   :dependencies [[clojure "1.2.0"]
                  [useful "0.4.0"]
