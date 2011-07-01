@@ -1,6 +1,6 @@
 (ns depot.maven
   (:use uncle.core depot.deps)
-  (:import [org.apache.maven.artifact.ant DependenciesTask RemoteRepository WritePomTask InstallTask Pom]
+  (:import [org.apache.maven.artifact.ant DependenciesTask RemoteRepository InstallTask Pom]
            [org.apache.tools.ant.taskdefs Delete]
            [org.apache.maven.model Dependency Exclusion]
            [java.io File]))
