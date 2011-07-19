@@ -2,4 +2,6 @@
   :description "A place for storing goods or motor vehicles."
   :dependencies [[clojure "1.2.0"]
                  [useful "0.4.0"]
-                 [org.clojars.ninjudd/maven-ant-tasks "2.1.0" :exclusions [ant/ant]]])
+                 [org.clojars.ninjudd/maven-ant-tasks "2.1.0" :exclusions [ant/ant]]]
+  :dev-dependencies [[org.clojars.flatland/cake-marginalia "0.6.1"]]
+  :tasks [cake-marginalia.tasks])
