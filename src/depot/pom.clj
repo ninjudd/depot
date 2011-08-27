@@ -34,13 +34,14 @@
 
 (defmethod prxml-tags ::dependency
   ([_ [dep opts]]
-     [:dependency
-      (map (partial apply prxml-tags)
-           {:group-id    (namespace dep)
-            :artifact-id (name dep)
-            :version     (:version opts)
-            :classifier  (:classifier opts)
-            :exclusions  (:exclusions opts)})]))
+     (when (:main opts)
+       [:dependency
+        (map (partial apply prxml-tags)
+             {:group-id    (namespace dep)
+              :artifact-id (name dep)
+              :version     (:version opts)
+              :classifier  (:classifier opts)
+              :exclusions  (:exclusions opts)})])))
 
 (defmethod prxml-tags ::repository
   ([_ [id url]]
