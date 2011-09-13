@@ -5,58 +5,56 @@
 (defn pomify [key]
   (->> key name camelize keyword))
 
-(defmulti prxml-tags
+(defmulti xml-tags
   (fn [tag value] (keyword "depot.pom" (name tag))))
 
-(defmethod prxml-tags :default
+(defmethod xml-tags :default
   ([tag value]
      (when value
        [(pomify tag) value])))
 
-(defmethod prxml-tags ::list
+(defmethod xml-tags ::list
   ([tag values]
-     [(pomify tag) (map (partial prxml-tags
+     [(pomify tag) (map (partial xml-tags
                                  (-> tag name (s/replace #"ies$" "y") keyword))
                         values)]))
 
 (doseq [c [::dependencies ::repositories]]
   (derive c ::list))
 
-(defmethod prxml-tags ::exclusions
+(defmethod xml-tags ::exclusions
   [tag values]
   [:exclusions
    (map
     (fn [dep]
-      [:exclusion (map (partial apply prxml-tags)
+      [:exclusion (map (partial apply xml-tags)
                        {:group-id (namespace dep)
                         :artifact-id (name dep)})])
     values)])
 
-(defmethod prxml-tags ::dependency
+(defmethod xml-tags ::dependency
   ([_ [dep opts]]
      (when (:main opts)
        [:dependency
-        (map (partial apply prxml-tags)
+        (map (partial apply xml-tags)
              {:group-id    (namespace dep)
               :artifact-id (name dep)
               :version     (:version opts)
               :classifier  (:classifier opts)
               :exclusions  (:exclusions opts)})])))
 
-(defmethod prxml-tags ::repository
+(defmethod xml-tags ::repository
   ([_ [id url]]
      [:repository [:id id] [:url url]]))
 
-(defmethod prxml-tags ::project
+(defmethod xml-tags ::project
   ([tag values]
      (list
-      [:decl!]
       [:project {:xmlns "http://maven.apache.org/POM/4.0.0"}
        [:modelVersion "4.0.0"]
-       (map (partial apply prxml-tags)
+       (map (partial apply xml-tags)
             (select-keys values
                          (rseq
                           [:artifact-id :group-id :version :name
                            :description :license
                            :dependencies :repositories])))])))
-
