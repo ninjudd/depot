@@ -34,14 +34,13 @@
 
 (defmethod xml-tags ::dependency
   ([_ [dep opts]]
-     (when (:main opts)
-       [:dependency
-        (map (partial apply xml-tags)
-             {:group-id    (namespace dep)
-              :artifact-id (name dep)
-              :version     (:version opts)
-              :classifier  (:classifier opts)
-              :exclusions  (:exclusions opts)})])))
+     [:dependency
+      (map (partial apply xml-tags)
+           {:group-id    (namespace dep)
+            :artifact-id (name dep)
+            :version     (:version opts)
+            :classifier  (:classifier opts)
+            :exclusions  (:exclusions opts)})]))
 
 (defmethod xml-tags ::repository
   ([_ [id url]]

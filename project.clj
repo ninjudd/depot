@@ -1,4 +1,4 @@
-(defproject depot "0.1.6"
+(defproject depot "0.1.7"
   :description "Library for fetching Clojure dependencies."
   :dependencies [[clojure "1.2.0"]
                  [uncle "0.2.3"]
