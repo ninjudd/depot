@@ -46,6 +46,13 @@
   ([_ [id url]]
      [:repository [:id id] [:url url]]))
 
+(defmethod xml-tags ::license
+  ([_ opts]
+     [:licenses
+      [:license (for [key [:name :url :distribution :comments]
+                      :let [val (get opts key)] :when val]
+                  [key (name val)])]]))
+
 (defmethod xml-tags ::project
   ([tag values]
      (list
