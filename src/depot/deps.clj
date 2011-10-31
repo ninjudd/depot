@@ -6,6 +6,10 @@
 (defn- backend [spec & args]
   (or (:depot spec) :maven))
 
-(defmulti fetch-deps "Fetch dependencies into the local cache and return a sequence of the jars." backend)
-(defmulti clear-deps "Clear dependencies from the local cache so they can be refetched."          backend)
-(defmulti publish    "Publish a project jar to the local cache."                                  backend)
+(defmulti fetch-deps
+  "Fetch dependencies into the local cache and return a sequence of the jars."
+  backend)
+
+(defmulti publish
+  "Publish a project jar to the local cache."
+  backend)

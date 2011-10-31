@@ -37,11 +37,6 @@
       (add-dependencies deps))
     (fileset-seq (get-reference "depot.fileset"))))
 
-(defmethod clear-deps :maven [spec type]
-  (doseq [dep (dependencies spec type)]
-    (let [path (.getSystemPath dep)]
-      (ant Delete {:file path}))))
-
 (defmethod publish :maven [spec jar pom]
   (ant Pom {:file pom :id "depot.pom"})
   (ant InstallTask {:file jar :pom-ref-id "depot.pom"}))
